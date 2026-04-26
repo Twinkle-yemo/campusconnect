@@ -26,12 +26,21 @@ async function verifyWithGemini(fileUrl, taskTitle, taskDescription) {
             parts: [
               { inline_data: { mime_type: blob.type || "image/jpeg", data: base64 } },
               {
-                text: `You are verifying a campus ambassador task submission.
-Task: "${taskTitle}"
-Description: "${taskDescription || "Complete the task as described"}"
-Does this screenshot provide reasonable evidence the ambassador completed this task?
-Reply ONLY with JSON: {"verified": true, "reason": "short reason"}
-No markdown, no extra text.`
+                text: `You are a strict verifier for a campus ambassador program.
+
+Task title: "${taskTitle}"
+Task description: "${taskDescription || "Complete the task as described"}"
+
+Look at the screenshot carefully. Reject it unless it CLEARLY and SPECIFICALLY shows evidence of completing this exact task.
+
+Rules:
+- If the image is unrelated, random, or does not visibly match the task → reject it
+- If the image is blurry, cropped, or cannot be verified → reject it
+- Only approve if the screenshot clearly matches the task described above
+- Be strict. When in doubt, reject.
+
+Reply ONLY with valid JSON (no markdown, no extra text):
+{"verified": false, "reason": "brief reason for rejection or approval"}`
               }
             ]
           }]

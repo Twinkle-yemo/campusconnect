@@ -119,6 +119,13 @@ export default function AdminDashboard() {
                   rows={2}
                   className="w-full bg-[#0f0f1a] border border-[#0f3460] rounded-xl px-3 py-2.5 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-indigo-500 resize-none"
                 />
+                <div className="flex gap-2 bg-indigo-950/40 border border-indigo-900/50 rounded-lg px-3 py-2">
+                  <span className="text-indigo-400 text-xs mt-0.5">🤖</span>
+                  <p className="text-indigo-300/70 text-xs leading-relaxed">
+                    <span className="text-indigo-300 font-medium">AI Tip:</span> The more specific your description, the stricter Gemini's verification.
+                    Instead of <span className="italic">"Post on social media"</span>, write <span className="italic">"Share a LinkedIn post mentioning CampusConnect — screenshot must show your profile name and the post text."</span>
+                  </p>
+                </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="text-gray-400 text-xs mb-1 block">Base Points</label>
