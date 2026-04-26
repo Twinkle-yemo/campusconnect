@@ -45,9 +45,12 @@ export default function Login() {
     }
     setLoading(true);
     try {
+      const role = isOrg ? "admin" : "ambassador";
+      sessionStorage.setItem("intendedRole", role);
       const result = await signInWithPopup(auth, googleProvider);
-      await saveUser(result.user, isOrg ? "admin" : "ambassador");
+      await saveUser(result.user, role);
     } catch (e) {
+      sessionStorage.removeItem("intendedRole");
       setError(e.message);
     }
     setLoading(false);
@@ -60,6 +63,7 @@ export default function Login() {
     setLoading(true);
     try {
       const role = isOrg ? "admin" : "ambassador";
+      sessionStorage.setItem("intendedRole", role);
       let result;
       if (isSignup) {
         result = await createUserWithEmailAndPassword(auth, email, password);
@@ -68,6 +72,7 @@ export default function Login() {
       }
       await saveUser(result.user, role);
     } catch (e) {
+      sessionStorage.removeItem("intendedRole");
       setError(e.message);
     }
     setLoading(false);

@@ -17,14 +17,22 @@ export default function App() {
       if (u) {
         try {
           const snap = await getDoc(doc(db, "users", u.uid));
-          setRole(snap.exists() ? snap.data().role : "ambassador");
+          if (snap.exists()) {
+            setRole(snap.data().role);
+            sessionStorage.removeItem("intendedRole");
+          } else {
+            // Doc not written yet (race condition on signup) — use intended role
+            const intendedRole = sessionStorage.getItem("intendedRole") || "ambassador";
+            setRole(intendedRole);
+          }
         } catch {
-          setRole("ambassador");
+          setRole(sessionStorage.getItem("intendedRole") || "ambassador");
         }
         setUser(u);
       } else {
         setUser(null);
         setRole(null);
+        sessionStorage.removeItem("intendedRole");
       }
       setLoading(false);
     });
